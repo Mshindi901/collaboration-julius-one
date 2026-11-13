@@ -34,4 +34,4 @@ export const user_schema = sequelize.define('users', {
         defaultValue: 'user',
     }, 
     
-});
+}, {timestamps: true});
