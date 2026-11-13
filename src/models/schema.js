@@ -19,10 +19,19 @@ export const user_schema = sequelize.define('users', {
         allowNull: false,
         unique: true,
         validate: {
-            isEmail: {
-                message: 'Please enter a valid email address'
-            },
+            isEmail: true,
         },
+        timestamps: true,
+    }, 
+
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+
+    role: {
+        type: DataTypes.ENUM('admin', 'user'),
+        defaultValue: 'user',
     }, 
     
-})
+});
