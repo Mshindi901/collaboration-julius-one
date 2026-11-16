@@ -4,7 +4,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/config.js';
 
-export const task_schema = sequelize.define('tasks', {
+export const task = sequelize.define('tasks', {
     id: {
      type: DataTypes.UUID,
      defaultValue: DataTypes.UUIDV4,
