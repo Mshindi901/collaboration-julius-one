@@ -42,7 +42,9 @@ export const signup = async (req, res) => {
         if (!is_password_correct) {
             return res.send({ message: 'Invalid password', status: 400});
         };
-        return res.send({ message: 'Signin successful', status: 200});
+        //generate token(jwt)
+        const token = jwt.sign({ user_id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+        return res.send({ message: 'Signin successful', status: 200, token: token});
     } catch (error) {
         return res.send({ message: 'Error signing in ${error', status: 500})
     };
