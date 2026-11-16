@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs';
 import { user } from '../models/userSchema.js';
 import jwt from 'jsonwebtoken';
 
+const JWT_SECRET = process.env.JWT_SECRET ;
+
 //Signup func
 export const signup = async (req, res) => {
     try {
