@@ -1,8 +1,17 @@
-<<<<<<< HEAD
 import bcrypt from 'bcryptjs';
 import { user } from '../models/userSchema.js';
 import jwt from 'jsonwebtoken';
+//adding Dotenv as import
+import dotenv from 'dotenv';
+//configuring dotenv 
+dotenv.config();
 
+//JULIUS YOU HEAVILY RELIED ON AI, BECAUSE:
+//1. No Dotenv was imported and configured
+//2. you used response send instead of a JSON payload
+//3. in your catch statement there are no returned response
+//4. Unnecessary Capital Letters
+//I WILL FIX THEM BUT ACHANA NA AI
 const JWT_SECRET = process.env.JWT_SECRET ;
 
 //Signup func
@@ -10,9 +19,13 @@ export const signup = async (req, res) => {
     try {
         const { username, email, password } = req.body;
         //if user already exists
+        //did not check if the req body contained the right info
+        if(!username || !email || !password){
+            return res.status(400).json({success: false, message: 'Missing Info'})
+        };
         const existing_user = await user.findOne({ where: { email: email }});
         if (existing_user) {
-            return res.send({ message: 'User already exists', status: 400});
+            return res.status(400).json({success: false, message: "Email in user"})
         }
         //hash password
         const hashed_password = await bcrypt.hash(password, 12);
@@ -22,9 +35,13 @@ export const signup = async (req, res) => {
             email: email,
             password: hashed_password
         });
-        return res.status(201).json({ message: 'User created successfully'});
+        if(!new_user){
+            return res.status(500).json({success: false, message :'Failed to save user info'})
+        };
+        return res.status(201).json({success: true, message: 'User created successfully'});
     } catch (error) {
-    console.error({ message: 'Error creating user ${error', status: 500});
+        console.error(`Error with signing up user ${error}`);
+        return res.status(500).json({success: false, message: 'Internal Server Error'});
     }
 };
 
@@ -33,39 +50,28 @@ export const signup = async (req, res) => {
   export const signin = async (req, res) => {
     try {
         const { email, password } = req.body;
+        if(!email || !password){
+            return res.status(400).json({success: false, message: 'Missing info'})
+        }
         // user by email
         const user = await user.findOne({ where: { email: email }});
         if (!user) {
-            return res.send({ message: 'User does not exist', status: 404});
+            return res.status(400).json({success: false, message: 'Email does not exist'});
         };
         //password check
         const is_password_correct = await bcrypt.compare(password, user.password);
         if (!is_password_correct) {
-            return res.send({ message: 'Invalid password', status: 400});
+            return res.status(400).json({success: false, message: 'Invalid Password'});
         };
         //generate token(jwt)
-        const token = jwt.sign({ user_id: user.id }, JWT_SECRET, { expiresIn: '1h' });
-        return res.send({ message: 'Signin successful', status: 200, token: token});
+        //JULIUS ACHANA NA AI 
+        //Nilikushow kwa TOken tunaweka id na role, not just id pekee
+        const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
+        return res.status(200).json({success: true, message: 'signed in successfully'});
     } catch (error) {
-        return res.send({ message: 'Error signing in ${error', status: 500})
+        console.error(`Error with signing up user ${error}`);
+        return res.status(500).json({success: false, message: 'Internal Server Error'});
     };
   };
-=======
-import {users_schema} from '../models/userSchema.js';
 
-export const sign_up = async(req, res) => {};
-
-export const sign_in = async(req)
-
-
-//JULIUS NIMEELLEWA TAKEOVER NI MBAYAAAA...NI MANNNU.....
-export const sign_up = async(req, res) =? {
-    try {
-        
-    } catch (error) {
-        console.error(`Error with user sign up ${error}`
-            return res
-        )
-    }
-}error
->>>>>>> ca0d2f5 (updating for merge)
+//ACHANA NA AI!!!!!!!
