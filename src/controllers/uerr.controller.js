@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import bcrypt from 'bcryptjs';
 import { user } from '../models/userSchema.js';
 import jwt from 'jsonwebtoken';
@@ -49,3 +50,22 @@ export const signup = async (req, res) => {
         return res.send({ message: 'Error signing in ${error', status: 500})
     };
   };
+=======
+import {users_schema} from '../models/userSchema.js';
+
+export const sign_up = async(req, res) => {};
+
+export const sign_in = async(req)
+
+
+//JULIUS NIMEELLEWA TAKEOVER NI MBAYAAAA...NI MANNNU.....
+export const sign_up = async(req, res) =? {
+    try {
+        
+    } catch (error) {
+        console.error(`Error with user sign up ${error}`
+            return res
+        )
+    }
+}error
+>>>>>>> ca0d2f5 (updating for merge)
