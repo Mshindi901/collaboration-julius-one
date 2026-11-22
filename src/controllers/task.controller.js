@@ -57,6 +57,7 @@ export const update_task = async(req, res) => {
 
 export const delete_task = async(req, res) => {
     try {
+        //test
         const {id} = req.params;
         if(!id){
             return res.status(400).json({success: false, message: 'No task ID'})
