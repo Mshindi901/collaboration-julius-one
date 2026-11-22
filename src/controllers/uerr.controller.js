@@ -77,10 +77,7 @@ export const signup = async (req, res) => {
   //ADMIN SIGN UP
   export const admin_sign_up = async(req, res) => {
     try {
-        const { role: admin } = req.user;
-        if(admin !== 'admin'){
-            return res.status(403).json({success: false, message: 'Unauthorized Access'})
-        };
+        //removed role checking apa julius
         const { username, email, role, password } = req.body;
         if(!username || !email || !role || !password){
             return res.status(400).json({success: false, message: 'Missing Info'})
@@ -112,8 +109,8 @@ export const signup = async (req, res) => {
         };
         return res.status(200).json({success: true, message: 'User found', data: user});
     } catch (error) {
-    console.error(`Error getting user ${error}`);
-    return res.status(500).json({success: false, message: 'Internal Server Error'});
+        console.error(`Error getting user ${error}`);
+        return res.status(500).json({success: false, message: 'Internal Server Error'});
     }
   };
    
