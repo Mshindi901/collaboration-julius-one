@@ -89,6 +89,10 @@ export const signup = async (req, res) => {
         if (existing_user) {
             return res.status(400).json({success: false, message: "Email in user"})
         };
+        const new_admin = await user.create({username, email, password, role: 'admin'})
+        if(!new_admin){
+            return res.status(500).json({success: false, message: 'Failed to add admin'})
+        }
         return res.status(201).json({success: true, message: 'Admin created successfully'});
     } catch (error) {
         console.error(`Error with signing up user ${error}`);
