@@ -75,10 +75,44 @@ export const signup = async (req, res) => {
   };
 
   //ADMIN SIGN UP
-  export const admin_sign_up = async(req, res) => {};
-
+  export const admin_sign_up = async(req, res) => {
+    try {
+        const { role: admin } = req.user;
+        if(admin !== 'admin'){
+            return res.status(403).json({success: false, message: 'Unauthorized Access'})
+        };
+        const { username, email, role, password } = req.body;
+        if(!username || !email || !role || !password){
+            return res.status(400).json({success: false, message: 'Missing Info'})
+        };
+        const existing_user = await user.findOne({ where: { email: email }});
+        if (existing_user) {
+            return res.status(400).json({success: false, message: "Email in user"})
+        };
+        return res.status(201).json({success: true, message: 'Admin created successfully'});
+    } catch (error) {
+        console.error(`Error with signing up user ${error}`);
+        return res.status(500).json({success: false, message: 'Internal Server Error'});
+    }
+  };
   //GET USER INFO
-  export const get_user = async(req, res) => {};
+  export const get_user = async(req, res) => {
+    try {
+        const {id} = req.params;
+        if(!id){
+            return res.status(400).json({success: false, message: 'No user ID'})
+        };
+        const user = await user.findByPk(id);
+        if(!user){
+            return res.status(404).json({success: false, message: 'User not found'})
+        };
+        return res.status(200).json({success: true, message: 'User found', data: user});
+    } catch (error) {
+    console.error(`Error getting user ${error}`);
+    return res.status(500).json({success: false, message: 'Internal Server Error'});
+    }
+  };
+   
 
 
 //ACHANA NA AI!!!!!!!

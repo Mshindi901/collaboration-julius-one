@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-// ndo hii
-=======
 import { task, task } from "../models/task_schema.js";
 import { user } from "../models/userSchema.js";
 
@@ -58,5 +55,19 @@ export const update_task = async(req, res) => {
     }
 };
 
-export const delete_task = async(req, res) => {};
->>>>>>> 29c7136 (added task create, get update and delete controllers)
+export const delete_task = async(req, res) => {
+    try {
+        const {id} = req.params;
+        if(!id){
+            return res.status(400).json({success: false, message: 'No task ID'})
+        };
+        const task = await task.findByPk(id);
+        if(!task){
+            return res.status(404).json({success: false, message: 'No task found'})
+        };
+        await task.delete_task({where: {id: id}});
+         res.status(200).json({success: true, message: 'Task deleted'});
+    } catch (error) {
+        console.error('Error deleting task')
+    };
+};
