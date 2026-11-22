@@ -8,7 +8,8 @@ export const task = sequelize.define('tasks', {
     id: {
      type: DataTypes.UUID,
      defaultValue: DataTypes.UUIDV4,
-     primaryKey: true   
+     primaryKey: true,
+     allowNull: false  
     },
     users_id: {
         type: DataTypes.UUID,
