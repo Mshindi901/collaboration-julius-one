@@ -74,4 +74,11 @@ export const signup = async (req, res) => {
     };
   };
 
+  //ADMIN SIGN UP
+  export const admin_sign_up = async(req, res) => {};
+
+  //GET USER INFO
+  export const get_user = async(req, res) => {};
+
+
 //ACHANA NA AI!!!!!!!
