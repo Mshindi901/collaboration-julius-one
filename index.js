@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import {database_connection} from './src/database/connect.js';
 import userRoutes from './src/routes/user.routes.js';
 import taskRoutes from './src/routes/task.routes.js';
+import teamRoutes from './src/routes/team.routes.js';
 dotenv.config();
 
 const port = process.env.PORT;
@@ -13,7 +14,8 @@ app.use(express.json());
 
 app.use('/api', userRoutes)
 app.use('/api', taskRoutes)
-
+app.use('/api', teamRoutes)
+ 
 app.listen(port,  async() => {
     await database_connection();
     console.log('Server is running');

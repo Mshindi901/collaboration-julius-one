@@ -35,7 +35,7 @@ export const get_task = async(req, res) => {
         if(!task){
             return res.status(400).json({success: false, message: 'Invalid task'})
         };
-        return res.status(200).json({success: false, message: 'Fetched Task', data: task})
+        return res.status(200).json({success: true, message: 'Fetched Task', data: task})
     } catch (error) {
         console.error(`Error getting task ${Error}`);
         return res.status(500).json({success: false, message: "Internal Server Error"})
@@ -77,7 +77,7 @@ export const delete_task = async(req, res) => {
         await task.destroy();
         return res.status(200).json({success: true, message: 'Task Deleted'})
     } catch (error) {
-        console.error('Error deleting task ${error}');
+        console.error(`Error deleting task ${error}`);
         return res.status(500).json({success: false, message: 'Internal Server Error'})
     }
 };
