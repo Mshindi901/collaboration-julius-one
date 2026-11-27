@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import {database_connection} from './src/database/connect.js';
+import userRoutes from './src/routes/user.routes.js';
 dotenv.config();
 
 const port = process.env.PORT;
@@ -8,6 +9,8 @@ const port = process.env.PORT;
 const app = express();
 
 app.use(express.json());
+
+app.use('/api', userRoutes)
 
 app.listen(port,  async() => {
     await database_connection();
