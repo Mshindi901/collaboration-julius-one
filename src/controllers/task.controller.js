@@ -48,33 +48,20 @@ export const update_task = async(req, res) => {
         if(!id){
             return res.status(400).json({success: false, message: "No task ID"})
         };
+        const {name, description, date} = req.body;
         const task = await task.findByPk(id);
         if(!task){
             return res.status(404).json({success: false, message: 'No task found'})
-        }
+        };
+        const updated_task = await task.update({name, description, date});
+        if(!updated_task){
+            return res.status(500).json({success: false, message: 'Failed to update task'});
+        };
+        return res.status(200).json({success: true, message: 'updated Successfully'});
     } catch (error) {
-        
+        console.error(`Error with updating task ${error}`);
+        return res.status(500).json({success: false, message: 'Internal Server Error'});
     }
 };
 
-<<<<<<< HEAD
-export const delete_task = async(req, res) => {
-    try {
-        //test
-        const {id} = req.params;
-        if(!id){
-            return res.status(400).json({success: false, message: 'No task ID'})
-        };
-        const task = await task.findByPk(id);
-        if(!task){
-            return res.status(404).json({success: false, message: 'No task found'})
-        };
-        await task.delete_task({where: {id: id}});
-         res.status(200).json({success: true, message: 'Task deleted'});
-    } catch (error) {
-        console.error('Error deleting task')
-    };
-};
-=======
 export const delete_task = async(req, res) => {};
->>>>>>> 8512581 (added routes)
