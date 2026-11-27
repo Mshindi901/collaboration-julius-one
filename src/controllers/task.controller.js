@@ -64,4 +64,20 @@ export const update_task = async(req, res) => {
     }
 };
 
-export const delete_task = async(req, res) => {};
+export const delete_task = async(req, res) => {
+    try {
+        const {id} = req.params;
+        if(!id){
+            return res.status(400).json({success: false, message: 'No task ID'})
+        };
+        const task = await task.findByPk(id);
+        if(!task){
+            return res.status(400).json({success: false, message: 'Invalid task'})
+        };
+        await task.destroy();
+        return res.status(200).json({success: true, message: 'Task Deleted'})
+    } catch (error) {
+        console.error('Error deleting task ${error}');
+        return res.status(500).json({success: false, message: 'Internal Server Error'})
+    }
+};
